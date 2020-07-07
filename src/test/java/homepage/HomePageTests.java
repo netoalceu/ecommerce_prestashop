@@ -13,6 +13,7 @@ import pages.CarrinhoPage;
 import pages.CheckoutPage;
 import pages.LoginPage;
 import pages.ModalProdutoPage;
+import pages.PedidoPage;
 import pages.ProductPage;
 import util.Funcoes;
 
@@ -87,7 +88,7 @@ public class HomePageTests extends BaseTests {
 		testValidarDetalhesDoProduto_DescricaoEValoresIguais();
 
 		// selecionando tamanho
-		List<String> listaOpcoes = productPage.obterOpcoesSelecionadas();
+		List <String> listaOpcoes = productPage.obterOpcoesSelecionadas();
 		// System.out.println("tamanho da lista = "+ listaOpcoes.size() + " , valor: "+
 		// listaOpcoes.get(0));
 
@@ -260,6 +261,31 @@ public class HomePageTests extends BaseTests {
 		checkoutPage.selecionarCheckboxIAgree();
 
 		assertTrue(checkoutPage.estaSelecionadoCheckboxIAgree());
+	}
+
+	@Test
+	public void testFinalizarPedido_pedidoFinalizadoComSucesso() {
+		// Pre-condicoes
+		// Checkout completamente concluido
+		IrParaCheckout_FreteMeioPagamentoEnderecoListadosOK();
+
+		// Teste
+		// Clicar no botao para confirmar o pedido
+		PedidoPage pedidoPage = checkoutPage.clicarBotaoConfirmaPedido();
+
+		// Validar valores da tela
+		assertTrue(pedidoPage.obter_textoPedidoConfirmado().endsWith("YOUR ORDER IS CONFIRMED"));
+		// assertThat(pedidoPage.obter_textoPedidoConfirmado().toUpperCase(), is("YOUR
+		// ORDER IS CONFIRMED"));
+
+		assertThat(pedidoPage.obter_email(), is("marcelo@teste.com"));
+
+		assertThat(pedidoPage.obter_totalProdutos(), is(esperado_subtotalProduto));
+
+		assertThat(pedidoPage.obter_totalTaxIncl(), is(esperado_totalTaxIncTotal));
+
+		assertThat(pedidoPage.obter_metodoPagamento(), is("check"));
+
 	}
 
 }
