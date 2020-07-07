@@ -89,9 +89,9 @@ public class CarrinhoPage {
 		return driver.findElement(taxesTotal).getText();
 	}
 
-//	public CheckoutPage clicarBotaoProceedToCheckout() {
-//		driver.findElement(botaoProceedToCheckout).click();
-//		return new CheckoutPage(driver);
-//	}
+	public CheckoutPage clicarBotaoProceedToCheckout() {
+		driver.findElement(botaoProceedToCheckout).click();
+		return new CheckoutPage(driver);
+	}
 
 }
